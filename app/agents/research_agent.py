@@ -1,16 +1,20 @@
 from tavily import TavilyClient
+from app.config import get_secret
 
 def research_agent(state):
-    client = TavilyClient(api_key="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")
+    api_key = get_secret("TAVILY_API_KEY")
+    if not api_key:
+        return {
+            "task": state.get("task"),
+            "research": "No Tavily key provided"
+        }
+
+    client = TavilyClient(api_key=api_key)
 
     task = state.get("task", "")
+    query = task.split("\n")[0][:200] or "software development"
 
-    short_query = task.split("\n")[0][:200]
-
-    results = client.search(
-        query=short_query,
-        max_results=2   # ✅ REDUCED
-    )
+    results = client.search(query=query, max_results=2)
 
     formatted = "\n".join([r["content"][:300] for r in results["results"]])
 

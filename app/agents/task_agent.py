@@ -1,24 +1,20 @@
 from langchain_groq import ChatGroq
+from app.config import get_secret
 
 def task_agent(state):
+    api_key = get_secret("GROQ_API_KEY")
+    if not api_key:
+        return {"error": "Missing GROQ_API_KEY"}
+
     llm = ChatGroq(
         model="llama-3.1-8b-instant",
-        api_key="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"
+        api_key=api_key
     )
 
     user_input = state["input"]
-
     response = llm.invoke(f"""
 You are a senior software engineer.
-
-Break this task into clear coding steps ONLY.
-Do NOT give project management advice.
-
-Focus on:
-- API structure
-- endpoints
-- database
-- authentication
+Break this task into coding steps only.
 
 Task:
 {user_input}

@@ -11,14 +11,18 @@ if st.button("Run AI Team"):
     else:
         result = run_system(user_input)
 
-        st.subheader("🧠 Task Breakdown")
-        st.write(result.get("task", "No output"))
+        # ✅ handle errors
+        if "error" in result:
+            st.error(result["error"])
+        else:
+            st.subheader("🧠 Task Breakdown")
+            st.write(result.get("task", "No output"))
 
-        st.subheader("🔍 Research")
-        st.write(result.get("research", "No output"))
+            st.subheader("🔍 Research")
+            st.write(result.get("research", "No output"))
 
-        st.subheader("💻 Generated Code")
-        st.code(result.get("code", "No output"))
+            st.subheader("💻 Generated Code")
+            st.code(result.get("code", "No output"))
 
-        st.subheader("🐞 Fixed Code")
-        st.code(result.get("final_code", "No output"))
+            st.subheader("🐞 Fixed Code")
+            st.code(result.get("final_code", "No output"))

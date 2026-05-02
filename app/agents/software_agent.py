@@ -1,19 +1,21 @@
 from langchain_groq import ChatGroq
+from app.config import get_secret
 
 def software_agent(state):
+    api_key = get_secret("GROQ_API_KEY")
+    if not api_key:
+        return {"error": "Missing GROQ_API_KEY"}
+
     llm = ChatGroq(
         model="llama-3.1-8b-instant",
-        api_key="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"
+        api_key=api_key
     )
 
     task = state.get("task", "")
-    research = state.get("research", "")
 
     response = llm.invoke(f"""
-Write MINIMAL working code only.
-
-Do not add explanations.
-Do not add extra features.
+Write minimal working code only.
+No explanations.
 
 Task:
 {task}
@@ -22,6 +24,6 @@ Task:
     return {
         "input": state.get("input"),
         "task": task,
-        "research": research,
+        "research": state.get("research"),
         "code": response.content
     }
