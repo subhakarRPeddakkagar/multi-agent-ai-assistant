@@ -1,19 +1,9 @@
 # Multi-Agent AI Assistant
 
-A multi-agent AI system built using LangGraph that:
-- Breaks tasks into steps
-- Performs web research (Tavily)
-- Generates code
-- Debugs code automatically
+A multi-agent AI system using LangGraph, Groq, Tavily, and Streamlit.
 
-## Tech Stack
-- LangGraph
-- Groq (LLM)
-- Tavily (Search)
-- Streamlit (UI)
-
-## Features
-- Multi-agent orchestration
-- Secure API key handling
-- Real-time code generation
-- Debugging pipeline
+Features:
+- Task planning
+- Research agent
+- Code generation
+- Debugging agent
